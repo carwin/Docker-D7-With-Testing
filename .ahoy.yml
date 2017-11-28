@@ -26,7 +26,7 @@ commands:
     cmd: 'docker-compose run web bash -c "/bin/behat {{args}}"'
     usage: Run the behat tests within the container
   wraith:
-    cmd: 'docker run -P -v /wraithy -w='/wraithy' bbcnews/wraith capture ./docker/wraith/nasa.yaml'
+    cmd: docker run -v $(pwd)/docker/wraith:/wraithy -w /wraithy bbcnews/wraith capture nasa.yml
     usage: This is wraith
   reset:
     cmd: |
