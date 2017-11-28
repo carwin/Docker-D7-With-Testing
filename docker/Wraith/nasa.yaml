@@ -1,0 +1,150 @@
+# Add as many domains as necessary. Key will act as a label
+domains:
+  before: "http://cms-testing-before.stage.nasawestprime.com"
+  after: "http://cms-testing-after.stage.nasawestprime.com"
+# (optional) JavaScript file to execute before taking screenshot of every path.
+# Can be used to reload current page with headers specified, or to dynamically
+# AJAX in content, or all manner of other uses!
+before_capture: 'javascript/wait--phantom.js'
+
+# Type page URL paths below, here are a couple of examples.
+# They should exist for all of the domains you've specified above.
+paths:
+  ######Auto Generated Tag Pages######
+  #Galaxies Tag
+  autogentag: /subject/6894/galaxies/
+
+  ######Static Landing Pages######
+  #Yesterday's Coffee
+  #staticland: /content/yesterdays-coffee
+  staticland: /about/org_index.html
+
+  ######Atom Types######
+  ##Image
+  atomimage: /mission_pages/shuttle/shuttlemissions/sts133/launch/sts133overview.html
+  ##YouTube
+  atomyoutube: /vision/space/workinginspace/bluford_1st_african_amer.html
+
+  ######Menu Pages######
+  #Topics - ISS
+  topiciss: /launchschedule
+  #Topics - Mars
+  mars: /topics/journeytomars/index.html
+  #Topics - Earth
+  earth: /topics/earth/index.html
+  #Topics - Tech
+  tech: /topics/technology/index.html
+  #Topics - Aero
+  aero: /topics/aeronautics/index.html
+  #Topics - Solar System
+  solar: /topics/solarsystem/index.html
+  #Topics - Education
+  edu: /offices/education/about/index.html
+  #Topics - History
+  history: /topics/history/index.html
+  #Topics - Benefits
+  benefits: /topics/benefits/index.html
+  #Topics - All
+  topicsall: /tags
+  #Missions - New Horizons
+  newhorizons: /mission_pages/newhorizons/main/index.html
+  #Missions - Kepler
+  kepler: /mission_pages/kepler/main/index.html
+  #Missions - ISS
+  iss: /mission_pages/station/main/index.html
+  #Missions - Curiosity
+  curiosity: /mission_pages/msl/index.html
+  #Missions - Hubble
+  hubble: /mission_pages/hubble/main/index.html
+  #Missions - All
+  missionsall: /missions
+  #Missions - Launch Schedule
+  launch: /launchschedule
+  #Galleries - Image of the Day
+  iotd: /multimedia/imagegallery/iotd.html
+  #Galleries - Galleries
+  galleries: /multimedia/imagegallery/index.html
+  #Galleries - Videos
+  videos: /multimedia/videogallery/index.html
+  #Galleries - Usage
+  galusage: /audience/formedia/features/MP_Photo_Guidelines.html
+  #NASA TV - NASA TV
+  nasatv: /multimedia/nasatv/index.html
+  #Follow NASA - Social Media
+  socialmedia: /socialmedia
+  #Follow NASA - Nasa Socials
+  nasasocials: /connect/social/index.html
+  #Follow NASA - Get Involved
+  involved: /solve
+  #Follow NASA - Nasa Chats
+  chats: /connect/chat/
+  #Downloads - Apps
+  apps: /connect/apps.html
+  #Downloads - Books
+  books: /connect/ebooks/index.html
+  #Downloads - Audio
+  audio: /connect/sounds/index.html
+  #Downloads - Pod
+  pod: /multimedia/podcasting/index.html
+  #About - About NASA
+  aboutnasa: /about/index.html
+  #About - Leadership
+  leadership: /nasa-leadership
+  #About - Org
+  org: /about/org_index.html
+  #About - Location
+  location: /about/sites/index.html
+  #About - Speakers
+  speakers: /about/exhibits/index.html
+  #About - Careers
+  careers: /about/career/index.html
+  #Audiences - Media
+  careers: /news/media/info/index.html
+  #Audiences - Edu
+  careers: /audience/foreducators/index.html
+  #Audiences - Students
+  careers: /audience/forstudents/index.html
+
+# amount of fuzz ImageMagick will use when comparing images. A higher fuzz makes the comparison less strict.
+fuzz: '20%'
+
+# the maximum acceptable level of difference (in %) between two images.
+# Wraith considers it a failure if an image diff goes above this threshold.
+threshold: 5
+
+# screen widths (and optional height) to resize the browser to before taking the screenshot
+screen_widths:
+  - 320
+  - 600x768
+  - 768
+  - 1024
+  - 1440
+
+# resize to each screen width, or reload at each screen width. (The former is more efficient).
+#resize_or_reload: 'reload'
+resize_or_reload: 'resize'
+
+# the engine to run Wraith with. Examples: 'phantomjs', 'casperjs', 'slimerjs'
+browser: "phantomjs"
+
+# the directory that your base screenshots will be stored in
+history_dir: 'shots_base'
+
+# the directory that your latest screenshots will be stored in
+directory: '/opt/tools/Testing/Output/wraith'
+
+gallery:
+  template: 'basic_template' # 'basic_template' (default) or 'slideshow_template'
+  thumb_width: 200
+  thumb_height: 200
+
+# choose how results are displayed in the gallery (default is `alphanumeric` if omitted)
+# Different screen widths are always grouped together.
+# Options:
+#   alphanumeric - all paths (with or without a difference) are shown, sorted by path
+#   diffs_first - all paths (with or without a difference) are shown, sorted by difference size (largest first)
+#   diffs_only - only paths with a difference are shown, sorted by difference size (largest first)
+#mode: diffs_first
+mode: diffs_only
+
+#phantomjs_options: "--remote-debugger-port=9000"
