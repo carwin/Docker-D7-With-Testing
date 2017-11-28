@@ -72,6 +72,15 @@ RUN { \
     echo "realpath_cache_ttl = 300"; \
   } > /usr/local/etc/php/php.ini
 
+# Composer
+RUN curl -sS https://getcomposer.org/installer | php \
+  && mv composer.phar /usr/local/bin/composer
+ENV PATH /root/.composer/vendor/bin:$PATH
+RUN mkdir -p /bin
+COPY composer.json /bin
+WORKDIR /bin
+RUN composer install
+
 # Make life simpler for running Drush and Drupal Console
 ENV PATH /var/www/html/vendor/bin:$PATH
 

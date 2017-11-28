@@ -23,7 +23,7 @@ commands:
     cmd: 'docker exec -it web drush sqlc'
     usage: Connect to the default mysql database. Supports piping of data into the command.
   behat:
-    cmd: 'docker-compose run testing bash -c "bin/behat {{args}}"'
+    cmd: 'docker-compose run web bash -c "/bin/behat {{args}}"'
     usage: Run the behat tests within the container
   reset:
     cmd: |
