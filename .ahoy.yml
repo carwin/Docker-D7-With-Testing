@@ -27,7 +27,7 @@ commands:
     usage: Run the behat tests within the container
   wraith:
     cmd: docker run -v $(pwd)/docker/wraith:/wraithy -w /wraithy bbcnews/wraith capture nasa.yml
-    usage: This is wraith
+    usage: Run the visual regression tests using the configuration file in ./docker/wraith/nasa.yml
   reset:
     cmd: |
       read -r -p "Are you sure? This will blow away your existing work and local database. [y/N] " response
