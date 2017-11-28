@@ -1,0 +1,41 @@
+ahoyapi: v2
+version: 0.0.0
+commands:
+  ps:
+    cmd: "docker-compose ps"
+    usage: List the running docker-compose containers
+  start:
+    cmd: "docker-compose start {{args}}"
+    usage: Start the docker-compose containers
+  stop:
+    cmd: "docker-compose stop {{args}}"
+    usage: Stop the docker-compose containers
+  restart:
+    cmd: "docker-compose restart {{args}}"
+    usage: Restart the docker-compose containers
+  drush:
+    cmd: 'docker exec -it web drush {{args}}'
+    usage: Run drush commands inside the web container
+  bash:
+    cmd: 'docker exec -it web /bin/bash'
+    usage: Start a shell in the container (like ssh without actual ssh)
+  sqlc:
+    cmd: 'docker exec -it web drush sqlc'
+    usage: Connect to the default mysql database. Supports piping of data into the command.
+  behat:
+    cmd: 'docker-compose run testing bash -c "bin/behat {{args}}"'
+    usage: Run the behat tests within the container
+  reset:
+    cmd: |
+      read -r -p "Are you sure? This will blow away your existing work and local database. [y/N] " response
+      if [ $response = y ]
+      then
+       #blow everything away
+       #git checkout master
+       #reinstall all the things
+       #tear it down
+      else
+        echo "Mmm k, bye."
+      fi
+    usage: Reset back to a clean state.
+

@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+  mysqldata: # persist database
+    build: ./docker/mysql
+    entrypoint: /bin/bash
+    container_name: mysqldata
+  mysql:
+    build: ./docker/mysql
+    ports:
+      - "3306"
+    env_file: ./docker/mysql/.env
+    volumes_from:
+      - mysqldata
+    container_name: mysql
+  web:
+    build: ./docker/web
+    ports:
+      - "3000:80"
+      - "35729:35729"
+    env_file: ./docker/web/.env
+    volumes:
+      - ./docroot/:/var/www/nasa
+      - ~/.ssh:/root/.ssh
+    container_name: web
+  testing:
+    build: ./docker/testing
+    ports:
+      - "9090:9090"
+    env_file: ./docker/testing/.env
+    volumes_from:
+      - web
+    container_name: testing
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.11.13.1/24
+          gateway: 10.11.13.1
