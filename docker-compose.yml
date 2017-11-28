@@ -1,10 +1,12 @@
 version: '2'
 
 services:
+
   mysqldata: # persist database
     build: ./docker/mysql
     entrypoint: /bin/bash
     container_name: mysqldata
+
   mysql:
     build: ./docker/mysql
     ports:
@@ -13,6 +15,7 @@ services:
     volumes_from:
       - mysqldata
     container_name: mysql
+
   web:
     build: ./docker/web
     ports:
@@ -23,10 +26,23 @@ services:
       - ./docroot/:/var/www/nasa
       - ~/.ssh:/root/.ssh
     container_name: web
+  
+  elasticsearch:
+    build: ./docker/elasticsearch
+    environment:
+      - bootstrap.memory_lock:true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.type=single-node"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    container_name: elasticsearch
+
   selenium_hub:
     image: selenium/hub
     ports:
       - "4444:4444"
+
   firefox:
     image: selenium/node-firefox
     depends_on:
@@ -34,6 +50,7 @@ services:
     environment:
       HUB_PORT_4444_TCP_ADDR: selenium_hub
       HUB_PORT_4444_TCP_PORT: 4444
+
   chrome:
     image: selenium/node-chrome
     depends_on:
@@ -41,9 +58,8 @@ services:
     environment:
       HUB_PORT_4444_TCP_ADDR: selenium_hub
       HUB_PORT_4444_TCP_PORT: 4444
+
 networks:
-  private:
-    driver: bridge
   default:
     driver: bridge
     ipam:
