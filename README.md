@@ -1,4 +1,4 @@
-# Docker containers for Drupal 7. Now with testing!
+# Docker containers for Drupal. Now with testing!
 
 ## Requirements
 
