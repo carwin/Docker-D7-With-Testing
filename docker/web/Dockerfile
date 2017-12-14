@@ -1,15 +1,15 @@
-FROM php:5.6.22-fpm
+FROM php:7.1-fpm
 
-RUN uname -r
+# RUN uname -r
 
-RUN echo "deb http://deb.debian.org/debian jessie main contrib non-free" > /etc/apt/sources.list
+# RUN echo "deb http://deb.debian.org/debian jessie main contrib non-free" > /etc/apt/sources.list
 # RUN echo "deb-src http://deb.debian.org/debian jessie main contrib non-free" >> /etc/apt/sources.list
 # RUN echo "deb http://deb.debian.org/debian jessie-updates main contrib non-free" >> /etc/apt/sources.list
 # RUN echo "deb-src http://deb.debian.org/debian jessie-updates main non-free" >> /etc/apt/sources.list
 # RUN echo "deb http://security.debian.org/debian jessie/updates main contrib non-free" >> /etc/apt/sources.list
 # RUN echo "deb-src http://security.debian.org/debian jessie/updates main contrib non-free" >> /etc/apt/sources.list
 
-RUN cat /etc/apt/sources.list
+# RUN cat /etc/apt/sources.list
 
 RUN apt-get -qq update
 
@@ -19,8 +19,9 @@ RUN apt-get install -y \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng12-dev \
-        apache2 \
-        libapache2-mod-fastcgi \
+        # apache2 \
+        nginx \
+        # libapache2-mod-fastcgi \
         php5-fpm \
         mysql-client \
         supervisor \
@@ -37,11 +38,18 @@ RUN pecl install xdebug \
 RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Create the directory for nginx's Document Root before we mount volumes
+# Add an nginx user then move the nginx configuration to the container
+# Also create stuff we need for Unison
+RUN mkdir -p /var/www/html/docroot
+RUN useradd nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Create the directory for Apache's document root before we mount volumes
 # Add an apache user then move the apache configuration to the container
-RUN mkdir -p /var/www/html/docroot
-RUN useradd apache
-COPY httpd.conf /etc/apache2/httpd.conf
+# RUN mkdir -p /var/www/html/docroot
+# RUN useradd apache
+# COPY httpd.conf /etc/apache2/httpd.conf
 
 # Move the xdebug configuration to the container
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug-host-stub.ini
@@ -86,7 +94,7 @@ ENV PATH /var/www/html/vendor/bin:$PATH
 
 # Set the working directory to the docroot for ease of use when attaching a
 # shell.
-WORKDIR /var/www/nasa
+WORKDIR /var/www/html/docroot
 
 # Run the supervisor process to spawn apache and php-fpm
 CMD supervisord

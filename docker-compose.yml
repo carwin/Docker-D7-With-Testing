@@ -23,7 +23,7 @@ services:
       - "35729:35729"
     env_file: ./docker/web/.env
     volumes:
-      - ./docroot/:/var/www/nasa
+      - ./docroot/:/var/www/html/docroot
       - ~/.ssh:/root/.ssh
     container_name: web
   
