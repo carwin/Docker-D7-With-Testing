@@ -6,6 +6,10 @@
 
 ## Usage
 
- - `docker-compose up`
+ - Clone this repository
+ - Clone your Drupal project as `docroot`
+ -- `git clone git@yourre.po/project.git docroot`
+ - The `docroot` directory is mounted in the web container
+ - Run `docker-compose up`
  - Check out the available `ahoy` commands in `.ahoy.yml`
  - Enjoy your setup!
